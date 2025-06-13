@@ -2,9 +2,9 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import { Container, Box } from '@mui/material'
 import ProductListPage from './pages/ProductListPage'
-import CartPage from './pages/CartPage'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import ProductDetailPage from './pages/ProductDetailPage'
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
       <Container sx={{ py: 4, flex: 1 }}>
         <Routes>
           <Route path="/" element={<ProductListPage />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/products/:productId" element={<ProductDetailPage />} />
         </Routes>
       </Container>
 

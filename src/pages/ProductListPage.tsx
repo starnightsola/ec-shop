@@ -11,6 +11,7 @@ import {
   Alert,
   Container,
 } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 const ProductListPage = () => {
   // data: APIから取得された商品データ配列
@@ -39,20 +40,23 @@ const ProductListPage = () => {
         {data?.map((product) => (
           <Grid key={product.id} size={{ xs: 12, sm: 6, md: 4 }}>
             <Card sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-              <CardMedia
-                component="img"
-                image={product.image}
-                alt={product.title}
-                sx={{ objectFit: 'contain', height: 200, p: 2 }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6" noWrap>
-                  {product.title}
-                </Typography>
-                <Typography color="text.secondary">
-                  ${product.price.toFixed(2)}
-                </Typography>
-              </CardContent>
+              <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <CardMedia
+                  component="img"
+                  image={product.image}
+                  alt={product.title}
+                  sx={{ objectFit: 'contain', height: 200, p: 2 }}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography variant="h6" noWrap>
+                    {product.title}
+                  </Typography>
+                  <Typography color="text.secondary">
+                    ${product.price.toFixed(2)}
+                  </Typography>
+                </CardContent>
+              </Link>
+              
             </Card>
           </Grid>
         ))}

@@ -12,3 +12,9 @@ export const fetchProducts = async (): Promise<Product[]> => {
 // | APIへのリクエスト    | `fetch()` を使って `/products` にアクセス |
 // | エラーハンドリング  | `!res.ok` で異常系を捕捉し、throw |
 // | データ返却          | JSON形式に変換して返す（React Query が受け取る） |
+
+export const fetchProductById = async (id: string) => {
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`)
+  if (!res.ok) throw new Error('商品詳細の取得に失敗しました')
+  return res.json()
+}
