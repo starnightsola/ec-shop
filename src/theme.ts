@@ -4,43 +4,32 @@ import { createTheme } from '@mui/material/styles'
 declare module '@mui/material/styles' {
   interface Palette {
     custom: {
-      coral: string
-      beige: string
-      mint: string
-      olive: string
+      headerFooter: string
+      background: string
     }
   }
   interface PaletteOptions {
     custom?: {
-      coral: string
-      beige: string
-      mint: string
-      olive: string
+      headerFooter: string
+      background: string
     }
   }
-
 }
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#FA7070',
-    },
-    secondary: {
-      main: '#A1C298',
+      main: '#856C8B',
     },
     background: {
-      default: '#FBF2CF', // beige
-      paper: '#C6EBC5',   // mint
+      default: '#F8F3EB',
     },
     text: {
       primary: '#333',
     },
     custom: {
-      coral: '#FA7070',
-      beige: '#FBF2CF',
-      mint: '#C6EBC5',
-      olive: '#A1C298',
+      headerFooter: '#856C8B',
+      background: '#F8F3EB',
     },
   },
 })

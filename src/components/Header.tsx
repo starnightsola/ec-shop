@@ -7,21 +7,17 @@ import { useTheme } from '@mui/material/styles'
 const Header = () => {
   const theme = useTheme()
   return (
-    <AppBar position="static" sx={{ bgcolor: theme.palette.custom.coral, color: 'white' }}>
+    <AppBar position="static" sx={{ bgcolor: theme.palette.custom.headerFooter, color: 'white' }}>
       <Toolbar>
         <Typography
           variant="h6"
           component={Link}
           to="/"
-          sx={{ color: 'white', textDecoration: 'none', flexGrow: 1,'&:hover': {
-            color: theme.palette.custom.olive,
-          }, }}
+          sx={{ color: 'white', textDecoration: 'none', flexGrow: 1, }}
         >
           ECショップ
         </Typography>
-        <IconButton component={Link} to="/cart" color="inherit" sx={{ '&:hover': {
-            color: theme.palette.custom.olive,
-          }, }}>
+        <IconButton component={Link} to="/cart" color="inherit">
           <ShoppingCartIcon />
         </IconButton>
       </Toolbar>
