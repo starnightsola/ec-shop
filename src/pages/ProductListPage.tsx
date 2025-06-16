@@ -10,8 +10,11 @@ import {
   CircularProgress,
   Alert,
   Container,
+  Button,
 } from '@mui/material'
 import { Link } from 'react-router-dom'
+import { useCart } from '../contexts/CartContext'
+import { createAddToCartAction } from '../utils/cartHelpers'
 
 const ProductListPage = () => {
   // data: APIから取得された商品データ配列
@@ -19,6 +22,7 @@ const ProductListPage = () => {
     queryKey: ['products'], // キャッシュ識別用のキー
     queryFn: fetchProducts, //データ取得関数（API呼び出し）
   })
+  const { dispatch } = useCart()
   if (isLoading) {
     return (
       <Container sx={{ textAlign: 'center', mt: 4 }}>
@@ -35,7 +39,7 @@ const ProductListPage = () => {
     )
   }
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container sx={{ my: 4 }}>
       <Grid container spacing={3}>
         {data?.map((product) => (
           <Grid key={product.id} size={{ xs: 12, sm: 6, md: 4 }}>
@@ -54,6 +58,27 @@ const ProductListPage = () => {
                   <Typography color="text.secondary">
                     ${product.price.toFixed(2)}
                   </Typography>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      width: '100%',
+                      mt: 3,
+                      borderRadius: '999px',       // 極端な丸み（pill型）
+                      fontWeight: 'bold',
+                    }}
+                    onClick={() =>
+                      dispatch(
+                        createAddToCartAction({
+                          productId: product.id,
+                          title: product.title,
+                          price: product.price,
+                          image: product.image,
+                        }, 1)
+                      )
+                    }
+                  >
+                    カートに追加
+                  </Button>
                 </CardContent>
               </Link>
               
