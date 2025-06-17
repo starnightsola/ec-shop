@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchProductById } from '../api/products'
-import { Box, CircularProgress, Container, Typography, Alert, Button, TextField } from '@mui/material'
+import { Box, CircularProgress, Container, Typography, Alert, Button, FormControl, InputLabel, Select, MenuItem, } from '@mui/material'
 
 const ProductDetailPage = () => {
   const { productId } = useParams()
@@ -12,6 +12,9 @@ const ProductDetailPage = () => {
     queryFn: () => fetchProductById(productId!),
     enabled: !!productId,
   })
+
+  // setQuantity: quantity を更新する関数
+  // useState(1): React に「このコンポーネント内で quantity という状態を使いたい、初期値は 1」と伝える。
   const [quantity, setQuantity] = useState(1)
 
   if (isLoading) return <Container><CircularProgress /></Container>
@@ -51,18 +54,27 @@ const ProductDetailPage = () => {
             justifyContent: 'center',
             alignItems: 'center',
             gap: 2,
-            maxWidth: 600,
             mx: 'auto', // 中央寄せ
             mb: 4, // 下余白
           }}
         >
-          <TextField
-            type="number"
-            label="数量"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-            inputProps={{ min: 1 }}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="quantity-label">数量</InputLabel>
+            <Select
+              labelId="quantity-label"
+
+              // 今選ばれている数量（状態）
+              value={quantity}
+              label="数量"
+              onChange={(e) => setQuantity(Number(e.target.value))}
+            >
+              {[1, 2, 3, 4, 5].map((num) => (
+                <MenuItem key={num} value={num}>
+                  {num}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <Button
             variant="contained"
             color="primary"
@@ -70,6 +82,8 @@ const ProductDetailPage = () => {
             sx={{
               borderRadius: '999px',       // 極端な丸み（pill型）
               fontWeight: 'bold',
+              whiteSpace: 'nowrap',
+              px: 4,
             }}
             onClick={() => {
               // ここで dispatch などに quantity を渡す処理を追加予定

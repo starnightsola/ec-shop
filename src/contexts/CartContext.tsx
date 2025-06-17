@@ -1,12 +1,8 @@
-import { createContext, useReducer, useContext } from 'react'
+import { createContext, useReducer, useContext, useEffect } from 'react'
 import type { ReactNode } from 'react' // ✅ ReactNode を type-only でインポート
 import type { CartState, CartAction } from '../types/cart' // ✅ 型のみインポート
 import { cartReducer } from '../reducers/cartReducer'
-
-// 初期状態
-const initialState: CartState = {
-  items: [],
-}
+import { loadCartFromStorage } from '../utils/cartInitialState'
 
 // Context作成
 const CartContext = createContext<{
@@ -20,11 +16,16 @@ const CartContext = createContext<{
 // children は、この CartProvider の中に「包まれる」コンポーネントたち（中身）です。
 // 型 { children: ReactNode } は、子要素として何でも受け取れることを意味します。
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-    // useReducer は状態とその更新方法（dispatch）をセットで管理します。
-    // cartReducer は、状態をどう更新するか定義した関数。
-    // initialState はカートの初期状態（例：空の配列）。
-  const [state, dispatch] = useReducer(cartReducer, initialState)
-
+  // useReducer は状態とその更新方法（dispatch）をセットで管理します。
+  // cartReducer は、状態をどう更新するか定義した関数。
+  // loadCartFromStorage はカートの状態
+  const [state, dispatch] = useReducer(cartReducer, loadCartFromStorage())
+  
+  // 👇 カート状態が変わるたびにlocalStorageに保存
+  useEffect(() => {
+    // カートの状態（state）を 文字列（JSON）に変換して、ブラウザの localStorage に "cart" という名前で保存しています
+    localStorage.setItem('cart', JSON.stringify(state))
+  }, [state])
   return (
     <CartContext.Provider value={{ state, dispatch }}>
       {children}
