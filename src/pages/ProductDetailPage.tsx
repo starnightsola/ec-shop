@@ -3,6 +3,9 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { fetchProductById } from '../api/products'
 import { Box, CircularProgress, Container, Typography, Alert, Button, FormControl, InputLabel, Select, MenuItem, } from '@mui/material'
+import { useCart } from '../contexts/CartContext'
+import { createAddToCartAction } from '../utils/cartHelpers'
+import { useNavigate } from 'react-router-dom'
 
 const ProductDetailPage = () => {
   const { productId } = useParams()
@@ -17,6 +20,8 @@ const ProductDetailPage = () => {
   // useState(1): React に「このコンポーネント内で quantity という状態を使いたい、初期値は 1」と伝える。
   const [quantity, setQuantity] = useState(1)
 
+  const { dispatch } = useCart()
+  const navigate = useNavigate()
   if (isLoading) return <Container><CircularProgress /></Container>
   if (error || !product) return <Container><Alert severity="error">データ取得エラー</Alert></Container>
 
@@ -68,9 +73,9 @@ const ProductDetailPage = () => {
               label="数量"
               onChange={(e) => setQuantity(Number(e.target.value))}
             >
-              {[1, 2, 3, 4, 5].map((num) => (
-                <MenuItem key={num} value={num}>
-                  {num}
+              {[1, 2, 3, 4, 5].map((quantity) => (
+                <MenuItem key={quantity} value={quantity}>
+                  {quantity}
                 </MenuItem>
               ))}
             </Select>
@@ -86,8 +91,18 @@ const ProductDetailPage = () => {
               px: 4,
             }}
             onClick={() => {
-              // ここで dispatch などに quantity を渡す処理を追加予定
-              console.log('カートに追加: 数量', quantity)
+              dispatch(
+                createAddToCartAction(
+                  {
+                    productId: product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                  },
+                  quantity // ✅ ユーザーが選んだ数量
+                )
+              )
+              navigate('/cart') // ✅ カートページへ遷移
             }}
           >
             カートに追加

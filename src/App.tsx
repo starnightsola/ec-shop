@@ -5,6 +5,7 @@ import ProductListPage from './pages/ProductListPage'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ProductDetailPage from './pages/ProductDetailPage'
+import CartPage from './pages/CartPage'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ProductListPage />} />
           <Route path="/products/:productId" element={<ProductDetailPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </Container>
 

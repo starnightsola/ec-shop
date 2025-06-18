@@ -36,11 +36,26 @@ const Header = () => {
             variant="h6"
             component={Link}
             to="/"
-            sx={{ color: 'white', textDecoration: 'none', }}
+            sx={{ 
+              color: 'white',
+              textDecoration: 'none',
+              '&:hover': {
+                color: 'white', // ← 文字色も固定
+              },
+            }}
           >
-            ECショップ
+            ECshop
           </Typography>
-          <IconButton color="inherit">
+          <IconButton
+            color="inherit"
+            component={Link}
+            to="/cart"
+            sx={{
+              '&:hover': {
+                color: 'inherit', // 文字・アイコンの色も維持
+              },
+            }}
+          >
             <Badge badgeContent={totalQuantity} color="secondary">
               <ShoppingCartIcon />
             </Badge>

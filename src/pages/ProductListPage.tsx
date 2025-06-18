@@ -11,10 +11,12 @@ import {
   Alert,
   Container,
   Button,
+  Box,
 } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useCart } from '../contexts/CartContext'
 import { createAddToCartAction } from '../utils/cartHelpers'
+import { useNavigate } from 'react-router-dom'
 
 const ProductListPage = () => {
   // data: APIから取得された商品データ配列
@@ -23,6 +25,7 @@ const ProductListPage = () => {
     queryFn: fetchProducts, //データ取得関数（API呼び出し）
   })
   const { dispatch } = useCart()
+  const navigate = useNavigate()
   if (isLoading) {
     return (
       <Container sx={{ textAlign: 'center', mt: 4 }}>
@@ -39,10 +42,10 @@ const ProductListPage = () => {
     )
   }
   return (
-    <Container sx={{ my: 4 }}>
-      <Grid container spacing={3}>
+    <Container sx={{ my: 4, p: 0, }}>
+      <Grid container spacing={2}>
         {data?.map((product) => (
-          <Grid key={product.id} size={{ xs: 12, sm: 6, md: 4 }}>
+          <Grid key={product.id} size={{ xs: 6, md: 4 }}>
             <Card sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
               <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <CardMedia
@@ -51,36 +54,49 @@ const ProductListPage = () => {
                   alt={product.title}
                   sx={{ objectFit: 'contain', height: 200, p: 2 }}
                 />
-                <CardContent sx={{ flexGrow: 1 }}>
+                <CardContent
+                  sx={{
+                    flexGrow: 1,
+                    px: 1.25,
+                    pt: 0,
+                    pb: '0!important',
+                  }}
+                >
                   <Typography variant="h6" noWrap>
                     {product.title}
                   </Typography>
-                  <Typography color="text.secondary">
-                    ${product.price.toFixed(2)}
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      width: '100%',
-                      mt: 3,
-                      borderRadius: '999px',       // 極端な丸み（pill型）
-                      fontWeight: 'bold',
-                    }}
-                    onClick={() =>
-                      dispatch(
-                        createAddToCartAction({
+                </CardContent>
+              </Link>
+              <Box sx={{ px: 1.25, pb: 2 }}>
+                <Typography color="text.secondary">
+                  ${product.price.toFixed(2)}
+                </Typography>
+                <Button
+                  variant="contained"
+                  sx={{
+                    width: '100%',
+                    mt: 2,
+                    borderRadius: '999px',       // 極端な丸み（pill型）
+                    fontWeight: 'bold',
+                  }}
+                  onClick={() => {
+                    dispatch(
+                      createAddToCartAction(
+                        {
                           productId: product.id,
                           title: product.title,
                           price: product.price,
                           image: product.image,
-                        }, 1)
+                        },
+                        1
                       )
-                    }
-                  >
-                    カートに追加
-                  </Button>
-                </CardContent>
-              </Link>
+                    )
+                    navigate('/cart') // ✅ カートページに遷移
+                  }}
+                >
+                  カートに追加
+                </Button>
+              </Box>
               
             </Card>
           </Grid>
