@@ -48,7 +48,7 @@ const CartPage = () => {
     </Container>
   ) : (
     <Container sx={{ mt: 4, mb: 6 , p: 0,}}>
-      <Typography variant="h5">現在のカートの中</Typography>
+      <Typography variant="h5">カート</Typography>
 
       {/* 🛒 商品リストをここに表示 */}
       <Card sx={{  mt: 4 }}>
@@ -58,7 +58,7 @@ const CartPage = () => {
               key={item.productId}
               sx={{
                 display: 'flex',
-                flexDirection: { xs: 'column', sm: 'row' },
+                flexDirection: { xs: 'column',sm: 'column', md: 'row' },
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 // 最後のアイテム以外にだけ下線を表示する
@@ -72,8 +72,16 @@ const CartPage = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 2,
-                  width: { xs: '100%', md: '50%' },
+                  width: { xs: '100%',sm: '100%', md: '68%' },
+                  color: 'black',
+                  transition: 'opacity 0.3s ease',
+                  '&:hover': {
+                    opacity: 0.7,
+                    color: 'black',
+                  },
                 }}
+                component={Link}
+                to={`/products/${item.productId}`} // 商品詳細ページに遷移
               >
                 <img
                   src={item.image}
@@ -88,9 +96,9 @@ const CartPage = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  mt: { xs: 3, sm: 0 },
+                  mt: { xs: 3, sm: 3, md: 0 },
                   flexWrap: 'wrap',
-                  width: { xs: '100%', md: '50%' },
+                  width: { xs: '100%',sm: '100%', md: '30%' },
                 }}
               >
                 {/* 数量変更 */}
@@ -99,7 +107,7 @@ const CartPage = () => {
                   sx={{
                     minWidth: 80,
                     width: { xs: '100%', md: 'auto' },
-                    mb: { xs: 2, md: 0 },
+                    mb: { xs: 2 ,sm: 2, md: 0 },
                   }}
                 >
                   <InputLabel id={`quantity-label-${item.productId}`}>数量</InputLabel>
@@ -140,30 +148,57 @@ const CartPage = () => {
         </CardContent>
       </Card>
 
-      {/* 合計とボタン（1列ずつ、SP:中央 / PC:右） */}
       <Box
         sx={{
           mt: 4,
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: { xs: 'center', md: 'flex-end' }, // SP: 中央, PC: 右
-          textAlign: { xs: 'center', md: 'right' },
+          justifyContent: 'space-between',
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: { xs: 'center', md: 'flex-end' }, // SP:中央 / PC:左
+          textAlign: { xs: 'center', md: 'left' },
+          gap: 6,
         }}
       >
-        <Typography sx={{ fontWeight: 'bold', mb: 2 }}>
-          合計 ${total.toLocaleString()}
-        </Typography>
-
+        {/* ← 左：商品一覧に戻る */}
         <Button
-          variant="contained"
+          component={Link}
+          to="/"
+          variant="outlined"
           sx={{
             borderRadius: '999px',
-            px: 4,
             fontWeight: 'bold',
+            '&:hover': {
+              color: '#6f5675',
+            },      
           }}
         >
-          注文手続きへ
+          商品一覧に戻る
         </Button>
+
+        {/* → 右：合計＋注文ボタン */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: { xs: 'center', md: 'flex-end' },
+            textAlign: { xs: 'center', md: 'right' },
+          }}
+        >
+          <Typography sx={{ fontWeight: 'bold', mb: 2 }}>
+            合計 ${total.toLocaleString()}
+          </Typography>
+
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: '999px',
+              px: 4,
+              fontWeight: 'bold',
+            }}
+          >
+            注文手続きへ
+          </Button>
+        </Box>
       </Box>
     </Container>
   )

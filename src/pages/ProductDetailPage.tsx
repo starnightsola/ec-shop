@@ -22,7 +22,14 @@ const ProductDetailPage = () => {
 
   const { dispatch } = useCart()
   const navigate = useNavigate()
-  if (isLoading) return <Container><CircularProgress /></Container>
+  if (isLoading) {
+    return (
+      <Container sx={{ textAlign: 'center', mt: 4 }}>
+        <CircularProgress />
+      </Container>
+    )
+  }
+  
   if (error || !product) return <Container><Alert severity="error">データ取得エラー</Alert></Container>
 
   return (
@@ -63,7 +70,7 @@ const ProductDetailPage = () => {
             mb: 4, // 下余白
           }}
         >
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <InputLabel id="quantity-label">数量</InputLabel>
             <Select
               labelId="quantity-label"

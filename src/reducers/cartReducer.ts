@@ -13,23 +13,35 @@ export const cartReducer = (
                 (item) => item.productId === action.payload.productId
             )
             if (existingItem) {
-                // すでに存在する商品 → 数量だけ更新
+                // すでに存在する商品 → 数量だけ更新（最大5まで）
                 return {
                     // 現在のstate（カートの状態）を元に、新しいstateを作成して返す。
                     ...state,
                     items: state.items.map((item) =>
                         item.productId === action.payload.productId
-                        ? { ...item, quantity: item.quantity + action.payload.quantity }
+                            ? {
+                                ...item,
+                                quantity: Math.min(
+                                    item.quantity + action.payload.quantity,
+                                    5 // ← 最大5に制限
+                                ),
+                            }
 
-                        // 違う商品ならそのまま
-                        : item
+                            // 違う商品ならそのまま
+                            : item
                     ),
                 }
             }
-            // 新規商品 → itemsに追加
+            // 新規商品 → itemsに追加（quantity: 5 を超えないように制限）
             return {
                 ...state,
-                items: [...state.items, action.payload],
+                items: [
+                    ...state.items,
+                    {
+                        ...action.payload,
+                        quantity: Math.min(action.payload.quantity, 5),
+                    },
+                ],
             }
         }
         case 'REMOVE_ITEM': {
