@@ -4,7 +4,7 @@
     "module": "ESNext",
     "jsx": "react-jsx", // ← ここが必要！
     "esModuleInterop": true, // ← Jestが推奨する設定
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
