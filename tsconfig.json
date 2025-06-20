@@ -11,5 +11,8 @@
     "strict": true,
     "types": ["node", "jest"]
   },
-  "include": ["src", "jest.setup.ts"]
+  "include": ["src", "jest.setup.ts"],
+  "references": [
+    { "path": "./tsconfig.app.json" }
+  ]
 }
