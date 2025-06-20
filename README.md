@@ -1,54 +1,40 @@
-# React + TypeScript + Vite
+# EC Shop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 概要
+React + TypeScript + MUI によるシンプルなECカートアプリです。
 
-Currently, two official plugins are available:
+## 使用技術
+- React 18
+- TypeScript
+- Vite
+- MUI (Material UI)
+- React Router
+- React Query
+- Context API + useReducer（状態管理）
+- Jest + Testing Library（テスト）
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## セットアップ方法
 
-## Expanding the ESLint configuration
+```bash
+git clone https://github.com/starnightsola/ec-shop.git
+cd ec-shop
+npm install
+npm run dev
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## テスト
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+```bash
+# 単体テスト（Jest）
+npm run test
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 機能一覧（Features）
+```markdown
+## 機能一覧
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- 商品一覧ページ
+- 商品詳細ページ
+- カート追加・削除
+- カートページでの数量変更
+- 検索機能
+- レスポンシブデザイン対応
+- コンポーネント単位のテスト実装（Jest）
