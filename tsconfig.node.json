@@ -7,7 +7,6 @@
     "lib": ["ES2023"],
     "module": "ESNext",
     "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
 
